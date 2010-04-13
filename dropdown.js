@@ -27,7 +27,6 @@ Create a new dropdown object for each item that has a subnav:
 		return new Dropdown(this);
 	});
 
-
 */
 
 (function($){
@@ -38,52 +37,50 @@ Create a new dropdown object for each item that has a subnav:
 		this.isOpen = false;
 		this.item = $(item);
 		this.subnav = this.item.siblings("ul");
-		
-		// bind events & start
 		this.init();
 		
 		return this;
 	}
 	
-	Dropdown.prototype.start = function(){
-		var self = this;
+	Dropdown.prototype = {
+		start: function(){
+			var self = this;
 		
-		this.timer = window.setInterval(function(){
-			if(!self.onItem && !self.onSubNav && self.isOpen){
-				self.stop();
-			}
-		}, 200);
-	}
-	
-	Dropdown.prototype.stop = function(){
-		window.clearInterval(this.timer);
-		this.subnav.hide();
-		this.isOpen = false;
-		this.item.removeClass("active");
-	}
-	
-	Dropdown.prototype.init = function(){
-		var self = this;
+			this.timer = window.setInterval(function(){
+				if(!self.onItem && !self.onSubNav && self.isOpen){
+					self.stop();
+				}
+			}, 200);
+		},
+		stop: function(){
+			window.clearInterval(this.timer);
+			this.subnav.hide();
+			this.isOpen = false;
+			this.item.removeClass("active");
+		},
+		init: function(){
+			var self = this;
 		
-		// bind to the main item
-		this.item.bind("mouseenter mouseleave", function(e){
+			// bind to the main item
+			this.item.bind("mouseenter mouseleave", function(e){
 			
-			// assume no
-			self.onItem = false;
+				// assume no
+				self.onItem = false;
 			
-			if(e.type === "mouseenter"){
-				$(this).addClass("active");
-				self.start();
-				self.subnav.show();
-				self.onItem = true;
-				self.isOpen = true;
-			}
-		});
+				if(e.type === "mouseenter"){
+					$(this).addClass("active");
+					self.start();
+					self.subnav.show();
+					self.onItem = true;
+					self.isOpen = true;
+				}
+			});
 		
-		// bind to subnav
-		this.subnav.bind("mouseenter mouseleave", function(e){
-			self.onSubNav = (e.type === "mouseenter") ? true : false;
-		});
+			// bind to subnav
+			this.subnav.bind("mouseenter mouseleave", function(e){
+				self.onSubNav = (e.type === "mouseenter") ? true : false;
+			});
+		}
 	}
 	
 })(jQuery);
