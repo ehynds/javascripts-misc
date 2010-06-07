@@ -40,7 +40,7 @@ Create a new dropdown object for each item that has a subnav:
 		this.init();
 		
 		return this;
-	}
+	};
 	
 	Dropdown.prototype = {
 		start: function(){
@@ -81,6 +81,9 @@ Create a new dropdown object for each item that has a subnav:
 				self.onSubNav = (e.type === "mouseenter") ? true : false;
 			});
 		}
-	}
+	};
+	
+	// expose
+	window.Dropdown = Dropdown;
 	
 })(jQuery);
